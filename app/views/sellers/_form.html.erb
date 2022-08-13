@@ -1,0 +1,21 @@
+<%= form_with(model: seller, html: {id: "seller-form"} )do |form| %>
+  <% if seller.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(seller.errors.count, "error") %> no se pudo guardar el vendedor:</h2>
+
+      <ul>
+        <% seller.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, "Nombre Completo", style: "display: block", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Nombre de vendedor" %>
+  </div>
+  <%= form.submit "Guardar Vendedor", class: "btn btn-outline-success" %>
+
+
+<% end %>
