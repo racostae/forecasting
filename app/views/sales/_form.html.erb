@@ -1,0 +1,40 @@
+<%= form_with(model: sale, html: {id: "sale-form"}) do |form| %>
+  <% if @sale.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@sale.errors.count, "error") %> no se pudo guardar la venta:</h2>
+
+      <ul>
+        <% @sale.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :seller_id, "Vendedor", style: "display: block", class: "form-label" %>
+    <%= form.select :seller_id, group_sellers, {}, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :product_id, "Producto", style: "display: block", class: "form-label" %>
+    <%= form.select :product_id, group_products, {}, class: "form-control" %>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :month, "Mes", style: "display: block", class: "form-label" %>
+      <%= form.select :month, group_months, {}, class: "form-control", placeholder: "Mes" %>
+    </div>
+    <div class="col">
+      <%= form.label :year, "Año", style: "display: block", class: "form-label" %>
+      <%= form.select :year, group_years, {}, class: "form-control", placeholder: "Año" %>
+    </div>
+  </div>
+  <div class="mb-3">
+    <%= form.label :plan, "Planeada", style: "display: block", class: "form-label" %>
+    <%= form.number_field :plan, class: "form-control", placeholder: "Plan", min: 0, value: (@sale.real || 0) %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :real, "Cantidad", style: "display: block", class: "form-label" %>
+    <%= form.number_field :real, class: "form-control", placeholder: "Cantidad", min: 0, value: (@sale.real || 0)%>
+  </div>
+  <%= form.submit "Guardar Venta", class: "btn btn-outline-success" %>
+<% end %>

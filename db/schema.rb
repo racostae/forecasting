@@ -10,9 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_11_053413) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_31_225910) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "brands", force: :cascade do |t|
+    t.string "name"
+    t.integer "lead_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.bigint "brand_id", null: false
+    t.string "name"
+    t.string "sku"
+    t.integer "average_sale"
+    t.integer "inventory"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "security_stock"
+    t.index ["brand_id"], name: "index_products_on_brand_id"
+  end
+
+  create_table "sales", force: :cascade do |t|
+    t.bigint "seller_id", null: false
+    t.bigint "product_id", null: false
+    t.integer "plan"
+    t.integer "real"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "error"
+    t.float "compliance"
+    t.float "weighted"
+    t.float "plan_error"
+    t.integer "month"
+    t.integer "year"
+    t.float "absolut"
+    t.index ["product_id"], name: "index_sales_on_product_id"
+    t.index ["seller_id"], name: "index_sales_on_seller_id"
+  end
 
   create_table "sellers", force: :cascade do |t|
     t.string "name"
@@ -20,4 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_11_053413) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "products", "brands"
+  add_foreign_key "sales", "products"
+  add_foreign_key "sales", "sellers"
 end

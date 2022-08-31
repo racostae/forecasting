@@ -1,0 +1,34 @@
+<%= form_with(model: product, html: {id: "product-form"} )do |form| %>
+  <% if @product.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@product.errors.count, "error") %> no se pudo guardar el producto:</h2>
+
+      <ul>
+        <% @product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :name, "Nombre", style: "display: block", class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Nombre del producto" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :sku, "SKU", style: "display: block", class: "form-label" %>
+    <%= form.text_field :sku, class: "form-control", placeholder: "SKU" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :average_sale, "Venta Promedio Mensual (cantidad)", style: "display: block", class: "form-label" %>
+    <%= form.number_field :average_sale, class: "form-control", placeholder: "Venta Promedio" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :inventory, "Inventario", style: "display: block", class: "form-label" %>
+    <%= form.number_field :inventory, class: "form-control", placeholder: "Inventario" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :brand_id, "Marca", style: "display: block", class: "form-label" %>
+    <%= form.select :brand_id, Brand.all.map { |brand| [brand.name, brand.id] }, {}, class: "form-control" %>
+  </div>
+  <%= form.submit "Guardar Producto", class: "btn btn-outline-success" %>
+<% end %>

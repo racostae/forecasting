@@ -1,1 +1,153 @@
 <h1>Dashboard</h1>
+
+<p style="color: green"><%= notice %></p>
+
+<div class="row">
+  <div id="sellers" class="col">
+    <h2>Vendedores</h2>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sellers.each do |seller| %>
+          <tr class="align-middle">
+            <td scope="row"><%= seller.id %></td>
+            <td><%= seller.name %></td>
+            <td>
+              <%= link_to "Editar", edit_seller_path(seller), class: "btn btn-outline-primary col" %>
+            </td>
+            <td>
+              <%= button_to "Eliminar", seller, method: :delete, form: { data: { turbo_confirm: "¿Estás seguro?" } }, class: "btn btn-outline-danger col" %>
+            </td>
+          </tr>
+          <% end %>
+      </table>
+    </div>
+  </div>
+
+  <div id="brands" class="col">
+    <h2>Marcas</h2>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Lead Time (dias)</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @brands.each do |brand| %>
+          <tr class="align-middle">
+            <th scope="row"><%= brand.id %></th>
+            <td><%= brand.name %></td>
+            <td><%= brand.lead_time %></td>
+            <td>
+              <%= link_to "Editar", edit_brand_path(brand), class: "btn btn-outline-primary col" %>
+            </td>
+            <td>
+              <%= button_to "Eliminar", brand, method: :delete, form: { data: { turbo_confirm: "¿Estás seguro?" } }, class: "btn btn-outline-danger col" %>
+            </td>
+          </tr>
+          <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div id="products" class="col">
+    <h2>Productos</h2>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">SKU</th>
+            <th scope="col">Venta Promedio</th>
+            <th scope="col">Inventario</th>
+            <th scope="col">Marca</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @products.each do |product| %>
+          <tr class="align-middle">
+            <th scope="row"><%= product.id %></th>
+            <td><%= product.name %></td>
+            <td><%= product.sku %></td>
+            <td><%= product.average_sale %></td>
+            <td><%= product.inventory %></td>
+            <td><%= product.brand.name %></td>
+            <td>
+              <%= link_to "Editar", edit_product_path(product), class: "btn btn-outline-primary col" %>
+            </td>
+            <td>
+              <%= button_to "Eliminar", product, method: :delete, form: { data: { turbo_confirm: "¿Estás seguro?" } }, class: "btn btn-outline-danger col" %>
+            </td>
+          </tr>
+          <% end %>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div id="sales" class="col">
+    <h2>Ventas</h2>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">ID#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Vendedor</th>
+            <th scope="col">Producto</th>
+            <th scope="col">Planeada</th>
+            <th scope="col">Cantidad(Real)</th>
+            <th scope="col">Error</th>
+            <th scope="col">Compliance</th>
+            <th scope="col">Weighted</th>
+            <th scope="col">Plan Error</th>
+            <th scope="col">Absolut</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sales.each do |sale| %>
+          <tr class="align-middle">
+            <th scope="row"><%= sale.id %></th>
+            <td><%= full_date(sale.month, sale.year) %></td>
+            <td><%= sale.seller.name %></td>
+            <td><%= sale.product.name %></td>
+            <td><%= sale.plan %></td>
+            <td><%= sale.real %></td>
+            <td><%= sale.error %></td>
+            <td><%= number_to_percentage sale.compliance*100, precision: 0%></td>
+            <td><%= number_to_percentage sale.weighted*100, precision: 0 %></td>
+            <td><%= number_to_percentage sale.plan_error*100, precision: 0 %></td>
+            <td><%= number_to_percentage sale.absolut*100, precision: 0 %></td>
+            <td>
+              <%= link_to "Editar", edit_sale_path(sale), class: "btn btn-outline-primary col" %>
+            </td>
+            <td>
+              <%= button_to "Eliminar", sale, method: :delete, form: { data: { turbo_confirm: "¿Estás seguro?" } }, class: "btn btn-outline-danger col" %>
+            </td>
+          </tr>
+          <% end %>
+      </table>
+    </div>
+  </div>
+</div>
